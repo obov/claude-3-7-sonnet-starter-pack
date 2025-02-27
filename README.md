@@ -1,21 +1,12 @@
 # Claude 3.7 Sonnet Starter Pack 🚀
 
-*Check out [IndyDevDan YouTube Channel](https://www.youtube.com/c/indydevdan) for more AI development content!*
+*Check out [IndyDevDan YouTube Channel](https://www.youtube.com/c/indydevdan) for more AI Agents, LLMs, and AI Coding*
 
 ![Claude 3.7 Sonnet Hero Image](https://docs.anthropic.com/assets/images/claude-hero-a532fd8a.webp)
 
 ## Overview
 
 This starter pack provides a collection of simple, self-contained examples showcasing the capabilities of Claude 3.7 Sonnet, Anthropic's latest and most powerful model. Each script demonstrates a specific feature or capability, making it easy to understand and integrate into your own projects.
-
-All examples use the [rich](https://github.com/Textualize/rich) Python library for beautiful, colorful terminal output with consistent visual styling:
-
-- 🔵 **Blue panels** for Claude's responses
-- 🟢 **Green panels** for requests and successful operations
-- 🟣 **Magenta panels** for tool definitions and important metrics
-- 🟡 **Yellow panels** for warnings and special cases
-- 🔴 **Red text** for errors
-- 🟣 **Cyan panels** for thinking processes
 
 ## Model Stats
 
