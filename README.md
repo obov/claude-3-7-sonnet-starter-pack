@@ -1,4 +1,6 @@
 # Claude 3.7 Sonnet Starter Pack 🚀
+> Look, Anthropic's Claude-3.7-Sonnet is a powerful, hybrid CRASHOUT LLM.
+> Let's breakdown it's capabilities and see how we can use it in our work and play.
 
 *Check out [IndyDevDan YouTube Channel](https://www.youtube.com/c/indydevdan) for more AI Agents, LLMs, and AI Coding*
 
@@ -7,6 +9,32 @@
 ## Overview
 
 This starter pack provides a collection of simple, self-contained examples showcasing the capabilities of Claude 3.7 Sonnet, Anthropic's latest and most powerful model. Each script demonstrates a specific feature or capability, making it easy to understand and integrate into your own projects.
+
+## Installation - Install [uv](https://docs.astral.sh/uv/getting-started/installation/)
+> uv is THE modern package manager for Python.
+
+macos + linux
+```bash
+brew install uv
+```
+
+windows
+```bash
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+## Usage - Single File Sonnet Scripts
+> See each file to see usage instructions. Start with `simple_prompt.py` and work your way up.
+
+- `simple_prompt.py` - Basic prompt to Claude 3.7 Sonnet
+- `simple_structured_output.py` - Demonstrates structured JSON output
+- `simple_tool_use.py` - Shows basic tool use integration
+- `prompt_with_extended_thinking.py` - Implements extended thinking for complex reasoning
+- `prompt_with_extended_thinking_and_streaming.py` - Combines extended thinking with streaming responses
+- `prompt_with_extended_thinking_tool_use.py` - Integrates extended thinking with tool use
+- `prompt_with_extended_output_and_extended_thinking_and_streaming.py` - Showcases extended output combined with extended thinking and streaming
+- `agent_bash_and_editor_with_extended_thinking.py` - Demonstrates an agent with bash and editor capabilities using extended thinking
+
 
 ## Model Stats
 
