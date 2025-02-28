@@ -14,6 +14,7 @@ Simple Prompt Example for Claude 3.7 Sonnet
 This script demonstrates basic usage of Claude 3.7 Sonnet without extended thinking.
 
 Usage:
+    uv run simple_prompt.py --prompt "5 bullet points: no markdown: Why are breakthroughs in AI so important?"
     uv run simple_prompt.py --prompt "5 bullet points: no markdown: Why are breakthroughs in AI so important?" --max_tokens 1000
 """
 
