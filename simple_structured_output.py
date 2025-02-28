@@ -14,6 +14,10 @@ Simple Structured Output Example for Claude 3.7 Sonnet
 This script demonstrates how to get structured JSON output from Claude 3.7 Sonnet.
 
 Usage:
+    uv run simple_structured_output.py --prompt "Analyze this customer feedback: Great buy, I'm happy with my purchase."
+
+    uv run simple_structured_output.py --prompt "Analyze this customer feedback: 'I've been a loyal user for 3 years, but the recent UI update is a disaster.'"
+
     uv run simple_structured_output.py --prompt "Analyze this customer feedback: 'I've been a loyal user for 3 years, but the recent UI update is a disaster.'" --max_tokens 1000
 """
 
