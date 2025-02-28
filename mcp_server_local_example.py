@@ -35,6 +35,19 @@ OPTION 1: ONE-STEP INSTALLATION (RECOMMENDED)
 ---------------------------------------------
 Install directly into Claude Code:
 
+Add the MCP server to Claude Code
+```bash
+claude mcp install local-weather-mcp -- uv run mcp_server_local_example.py
+```
+
+Turn on the server
+```bash
+uv run mcp_server_local_example.py
+```
+
+
+
+
 ```bash
 # Install dependencies and register with Claude Code in one command
 uvx mcp install mcp_server_local_example.py --name weather-api
@@ -45,28 +58,6 @@ Then start Claude Code:
 claude
 ```
 
-OPTION 2: MANUAL SETUP
----------------------
-1. Install dependencies:
-   ```bash
-   uv pip install "mcp[cli]>=1.3.0" anthropic requests
-   ```
-
-2. Run the server:
-   ```bash
-   python mcp_server_local_example.py
-   ```
-
-3. In another terminal, register with Claude:
-   ```bash
-   claude mcp register weather-api http://localhost:8000
-   ```
-
-4. Start Claude:
-   ```bash
-   claude
-   ```
-
 USING THE WEATHER API IN CLAUDE
 -------------------------------
 Once set up, simply ask Claude about the weather:
@@ -76,7 +67,7 @@ Once set up, simply ask Claude about the weather:
 
 When finished:
 ```bash
-claude mcp unregister weather-api
+claude mcp remove local-weather-mcp
 ```
 """
 
@@ -88,46 +79,56 @@ import requests
 from typing import Dict, Any, List, Optional
 from dotenv import load_dotenv
 from mcp.server.fastmcp import FastMCP
+from rich.console import Console
+from rich.panel import Panel
+from rich.syntax import Syntax
+from rich.table import Table
 
 # Load environment variables
 load_dotenv()
 
+# Initialize rich console
+console = Console()
+
+
 def get_weather(location: str) -> Dict[str, Any]:
     """
     Get current weather for a location using Open-Meteo API
-    
+
     Args:
         location (str): City name or location
-        
+
     Returns:
         dict: Weather data including temperature (in Fahrenheit), condition, humidity, and alerts
     """
     try:
         # Get coordinates for the location using geocoding API
-        geocoding_url = f"https://geocoding-api.open-meteo.com/v1/search?name={location}&count=1"
+        geocoding_url = (
+            f"https://geocoding-api.open-meteo.com/v1/search?name={location}&count=1"
+        )
         geo_response = requests.get(geocoding_url)
         geo_data = geo_response.json()
-        
+
         if not geo_data.get("results"):
             return {
                 "temperature": "Unknown",
                 "condition": "Location not found",
                 "humidity": "Unknown",
-                "alerts": []
+                "alerts": [],
             }
-            
+
         # Extract coordinates
         lat = geo_data["results"][0]["latitude"]
         lon = geo_data["results"][0]["longitude"]
-        
+
         # Get weather data using coordinates
         weather_url = f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&current=temperature_2m,relative_humidity_2m,weather_code"
         weather_response = requests.get(weather_url)
         weather_data = weather_response.json()
-        
+
         # Extract current weather information
         current = weather_data.get("current", {})
-        
+
         # Convert weather code to condition string
         # Based on WMO Weather interpretation codes (WW)
         # https://open-meteo.com/en/docs
@@ -161,10 +162,10 @@ def get_weather(location: str) -> Dict[str, Any]:
             96: "Thunderstorm with slight hail",
             99: "Thunderstorm with heavy hail",
         }
-        
+
         weather_code = current.get("weather_code", 0)
         condition = weather_codes.get(weather_code, "Unknown")
-        
+
         # Generate alerts based on weather conditions
         alerts = []
         if weather_code >= 95:
@@ -175,43 +176,47 @@ def get_weather(location: str) -> Dict[str, Any]:
             alerts.append("Heavy Snow Warning")
         if weather_code in [56, 57, 66, 67]:
             alerts.append("Freezing Precipitation Warning")
-        
+
         # Get temperature in Celsius and convert to Fahrenheit
         temp_c = current.get("temperature_2m", "Unknown")
-        if isinstance(temp_c, (int, float)) or (isinstance(temp_c, str) and temp_c.replace(".", "", 1).isdigit()):
+        if isinstance(temp_c, (int, float)) or (
+            isinstance(temp_c, str) and temp_c.replace(".", "", 1).isdigit()
+        ):
             temp_c = float(temp_c)
             temp_f = (temp_c * 9 / 5) + 32
             temperature = temp_f
         else:
             temperature = temp_c
-        
+
         return {
             "temperature": temperature,
             "temperature_c": temp_c,  # Keep original Celsius value for reference
             "condition": condition,
             "humidity": f"{current.get('relative_humidity_2m', 'Unknown')}%",
-            "alerts": alerts
+            "alerts": alerts,
         }
     except Exception as e:
-        print(f"Error fetching weather data: {e}")
+        console.print(f"[bold red]Error fetching weather data:[/bold red] {e}")
         return {
             "temperature": "Error",
             "temperature_c": "Error",
             "condition": "Service unavailable",
             "humidity": "Unknown",
-            "alerts": ["Weather service unavailable"]
+            "alerts": ["Weather service unavailable"],
         }
+
 
 # Create the MCP server
 mcp = FastMCP("Weather API")
 
+
 @mcp.tool()
 def get_forecast(location: str) -> Dict[str, Any]:
     """Get weather forecast for a location.
-    
+
     Args:
         location: City name or location for the forecast
-        
+
     Returns:
         Weather forecast data including temperature (in Fahrenheit), conditions, and humidity
     """
@@ -219,29 +224,31 @@ def get_forecast(location: str) -> Dict[str, Any]:
     return {
         "temperature": weather_data["temperature"],
         "conditions": weather_data["condition"],
-        "humidity": weather_data["humidity"]
+        "humidity": weather_data["humidity"],
     }
+
 
 @mcp.tool()
 def get_alerts(location: str) -> List[str]:
     """Get weather alerts for a location.
-    
+
     Args:
         location: City name or location to check for weather alerts
-        
+
     Returns:
         List of active weather alerts for the location
     """
     weather_data = get_weather(location)
     return weather_data["alerts"]
 
+
 @mcp.resource("weather://{location}/current")
 def get_current_weather(location: str) -> str:
     """Get current weather information for a location.
-    
+
     Args:
         location: City name or location
-        
+
     Returns:
         Text description of current weather conditions
     """
@@ -249,15 +256,19 @@ def get_current_weather(location: str) -> str:
     alerts_text = ""
     if weather_data["alerts"]:
         alerts_text = f"\nActive alerts: {', '.join(weather_data['alerts'])}"
-    
+
     # Format temperature display with both units
-    if 'temperature_c' in weather_data and weather_data['temperature_c'] != "Unknown" and weather_data['temperature_c'] != "Error":
-        temp_c = weather_data['temperature_c']
-        temp_f = weather_data['temperature']
+    if (
+        "temperature_c" in weather_data
+        and weather_data["temperature_c"] != "Unknown"
+        and weather_data["temperature_c"] != "Error"
+    ):
+        temp_c = weather_data["temperature_c"]
+        temp_f = weather_data["temperature"]
         temp_display = f"{temp_c}°C ({temp_f:.1f}°F)"
     else:
         temp_display = f"{weather_data['temperature']}°F"
-    
+
     return f"""
 Current weather for {location}:
 Temperature: {temp_display}
@@ -265,70 +276,144 @@ Conditions: {weather_data['condition']}
 Humidity: {weather_data['humidity']}{alerts_text}
 """
 
+
 def demonstrate_client_usage():
     """Simulate how a client would interact with this MCP server."""
-    
+
     try:
         from anthropic import Anthropic
+
         api_key = os.environ.get("ANTHROPIC_API_KEY")
         if api_key:
             client = Anthropic(api_key=api_key)
         else:
             raise ValueError("No API key found")
     except (ImportError, ValueError):
-        print("\n=== SIMULATED CLIENT EXAMPLE ===")
-        print("Note: No Anthropic API key found or client available.")
-        print("This is a simulation of how Claude would interact with this MCP server.\n")
-        
+        console.print(
+            Panel(
+                "Note: No Anthropic API key found or client available.\n"
+                "This is a simulation of how Claude would interact with this MCP server.",
+                title="[bold yellow]SIMULATED CLIENT EXAMPLE[/bold yellow]",
+                border_style="yellow",
+            )
+        )
+
         # Simulate client interaction
         location = "Paris"
-        print(f"User: What's the weather in {location}?")
-        print("\nClaude (thinking): I need to get weather information for this location.")
-        print("I'll use the weather API tools to get the forecast and any alerts.")
-        
+        console.print(f"[bold cyan]User:[/bold cyan] What's the weather in {location}?")
+
+        thinking_content = (
+            "I need to get weather information for this location.\n"
+            "I'll use the weather API tools to get the forecast and any alerts."
+        )
+        console.print(
+            Panel(
+                thinking_content,
+                title="[bold cyan]Claude (thinking)[/bold cyan]",
+                border_style="cyan",
+            )
+        )
+
         # Get actual data from our functions for the demo
-        forecast = get_forecast(location)
-        alerts = get_alerts(location)
-        
-        print(f"\nWeather data retrieved for {location}:")
-        print(f"  Temperature: {forecast['temperature']}°F")
-        print(f"  Conditions: {forecast['conditions']}")
-        print(f"  Humidity: {forecast['humidity']}")
-        print(f"  Alerts: {', '.join(alerts) if alerts else 'None'}")
-        
-        print(f"\nClaude: The current weather in {location} is {forecast['conditions'].lower()} ")
-        print(f"with a temperature of {forecast['temperature']}°F and humidity of {forecast['humidity']}.")
-        
+        with console.status("[bold green]Fetching weather data...", spinner="dots"):
+            forecast = get_forecast(location)
+            alerts = get_alerts(location)
+
+        # Create a table for weather data
+        weather_table = Table(title=f"Weather Data for {location}")
+        weather_table.add_column("Metric", style="cyan")
+        weather_table.add_column("Value", style="green")
+
+        weather_table.add_row("Temperature", f"{forecast['temperature']:.1f}°F")
+        weather_table.add_row("Conditions", forecast["conditions"])
+        weather_table.add_row("Humidity", forecast["humidity"])
+        weather_table.add_row("Alerts", ", ".join(alerts) if alerts else "None")
+
+        console.print(weather_table)
+
+        # Claude's response
+        response = (
+            f"The current weather in {location} is {forecast['conditions'].lower()} "
+        )
+        response += f"with a temperature of {forecast['temperature']:.1f}°F and humidity of {forecast['humidity']}. "
+
         if alerts:
-            print(f"There are active weather alerts for {location}: {', '.join(alerts)}.")
-            print("Please take necessary precautions if you're in the area.")
+            response += (
+                f"There are active weather alerts for {location}: {', '.join(alerts)}. "
+            )
+            response += "Please take necessary precautions if you're in the area."
         else:
-            print(f"There are no active weather alerts for {location}.")
-        
-        print("=== END SIMULATED EXAMPLE ===\n")
+            response += f"There are no active weather alerts for {location}."
+
+        console.print(
+            Panel(
+                response,
+                title="[bold blue]Claude's Response[/bold blue]",
+                border_style="blue",
+            )
+        )
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description='Run a weather MCP server with the MCP Python SDK'
+        description="Run a weather MCP server with the MCP Python SDK"
     )
-    parser.add_argument('--client', action='store_true', help='Demonstrate client usage')
-    
+    parser.add_argument(
+        "--client", action="store_true", help="Demonstrate client usage"
+    )
+
     args = parser.parse_args()
-    
+
     if args.client:
         demonstrate_client_usage()
     else:
-        print(f"\n=== WEATHER MCP SERVER ===")
-        print("Starting Weather MCP server...")
-        print("\nServer capabilities:")
-        print("- get_forecast: Get weather forecast for a location")
-        print("- get_alerts: Get weather alerts for a location")
-        print("- weather://{location}/current: Resource for current weather")
-        
-        print("\nQuick setup:")
-        print("1. In Claude Code: mcp install mcp_server_local_example.py --name weather-api")
-        print("2. Ask about weather anywhere: \"What's the weather in Tokyo?\"")
-        print("\nServer is running. Press Ctrl+C to stop.\n")
-        
+        # Display tool definitions
+        console.print(
+            Panel(
+                Syntax(
+                    json.dumps(
+                        {
+                            "name": "get_forecast",
+                            "description": "Get weather forecast for a location",
+                            "input_schema": {
+                                "type": "object",
+                                "properties": {"location": {"type": "string"}},
+                                "required": ["location"],
+                            },
+                        },
+                        indent=2,
+                    ),
+                    "json",
+                    theme="monokai",
+                    word_wrap=True,
+                ),
+                title="[bold magenta]Weather Tool Definition[/bold magenta]",
+                border_style="magenta",
+            )
+        )
+
+        # Display server info
+        server_info = (
+            "Server capabilities:\n"
+            "- get_forecast: Get weather forecast for a location\n"
+            "- get_alerts: Get weather alerts for a location\n"
+            "- weather://{location}/current: Resource for current weather\n\n"
+            "Quick setup:\n"
+            "1. In Claude Code: claude mcp install local-weather-api -- uv run mcp_server_local_example.py\n"
+            '2. Ask about weather anywhere: "What\'s the weather in Tokyo?"\n\n'
+            "Server is running. Press Ctrl+C to stop."
+        )
+
+        console.print(
+            Panel(
+                server_info,
+                title="[bold green]WEATHER MCP SERVER[/bold green]",
+                border_style="green",
+            )
+        )
+
         # Run the MCP server
-        mcp.run()
+        with console.status(
+            "[bold green] Your Local Weather MCP server is live!", spinner="dots"
+        ):
+            mcp.run()

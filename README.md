@@ -98,3 +98,5 @@ For more information on Claude 3.7 Sonnet and extended thinking, check out these
 - [Astral UV](https://docs.astral.sh/uv/)
 - [Extended Thinking Tips for Complex STEM Problems](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/extended-thinking-tips#complex-stem-problems)
 - [Extended Thinking Documentation](https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking)
+- [Python MCP](https://github.com/modelcontextprotocol/python-sdk?tab=readme-ov-file#installation)
+- [Claude Code Tutorials](https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/tutorials#set-up-model-context-protocol-mcp)
