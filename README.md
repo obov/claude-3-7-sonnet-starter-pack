@@ -34,6 +34,8 @@ powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | ie
 - `prompt_with_extended_thinking_tool_use.py` - Integrates extended thinking with tool use
 - `prompt_with_extended_output_and_extended_thinking_and_streaming.py` - Showcases extended output combined with extended thinking and streaming
 - `agent_bash_and_editor_with_extended_thinking.py` - Demonstrates an agent with bash and editor capabilities using extended thinking
+- `mcp_server_local_example.py` - Demonstrates a local MCP server for weather data with Claude 3.7 Sonnet
+- `mcp_server_fetch_hosted_example.py` - Shows how to use the Fetch MCP server to retrieve web content with Claude
 
 
 ## Model Stats
