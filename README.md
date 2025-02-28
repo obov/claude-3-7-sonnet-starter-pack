@@ -2,7 +2,7 @@
 > Look, Anthropic's Claude-3.7-Sonnet is a powerful, hybrid CRASHOUT LLM.
 > Let's breakdown it's capabilities and see how you can use it in your work and play.
 
-*Check out [IndyDevDan YouTube Channel](https://www.youtube.com/c/indydevdan) for more AI Agents, LLMs, and AI Coding*
+*Check out [IndyDevDan YouTube Channel](https://www.youtube.com/c/indydevdan) for the full breakdown of this starter pack and more AI Agents, LLMs, and AI Coding*
 
 ![Claude 3.7 Sonnet Hero Image](images/gpt-4-5-flop-claude-3-7-sonnet-claude-code.png)
 
