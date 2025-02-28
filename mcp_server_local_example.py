@@ -100,7 +100,7 @@ def get_weather(location: str) -> Dict[str, Any]:
         location (str): City name or location
         
     Returns:
-        dict: Weather data including temperature, condition, humidity, and alerts
+        dict: Weather data including temperature (in Fahrenheit), condition, humidity, and alerts
     """
     try:
         # Get coordinates for the location using geocoding API
@@ -176,8 +176,18 @@ def get_weather(location: str) -> Dict[str, Any]:
         if weather_code in [56, 57, 66, 67]:
             alerts.append("Freezing Precipitation Warning")
         
+        # Get temperature in Celsius and convert to Fahrenheit
+        temp_c = current.get("temperature_2m", "Unknown")
+        if isinstance(temp_c, (int, float)) or (isinstance(temp_c, str) and temp_c.replace(".", "", 1).isdigit()):
+            temp_c = float(temp_c)
+            temp_f = (temp_c * 9 / 5) + 32
+            temperature = temp_f
+        else:
+            temperature = temp_c
+        
         return {
-            "temperature": current.get("temperature_2m", "Unknown"),
+            "temperature": temperature,
+            "temperature_c": temp_c,  # Keep original Celsius value for reference
             "condition": condition,
             "humidity": f"{current.get('relative_humidity_2m', 'Unknown')}%",
             "alerts": alerts
@@ -186,6 +196,7 @@ def get_weather(location: str) -> Dict[str, Any]:
         print(f"Error fetching weather data: {e}")
         return {
             "temperature": "Error",
+            "temperature_c": "Error",
             "condition": "Service unavailable",
             "humidity": "Unknown",
             "alerts": ["Weather service unavailable"]
@@ -202,17 +213,11 @@ def get_forecast(location: str) -> Dict[str, Any]:
         location: City name or location for the forecast
         
     Returns:
-        Weather forecast data including temperature, conditions, and humidity
+        Weather forecast data including temperature (in Fahrenheit), conditions, and humidity
     """
     weather_data = get_weather(location)
-    temp = weather_data["temperature"]
-    # Convert to Fahrenheit if temperature is a number
-    if isinstance(temp, (int, float)) or (isinstance(temp, str) and temp.replace(".", "", 1).isdigit()):
-        temp = float(temp)
-        temp_f = (temp * 9 / 5) + 32
-        temp = temp_f
     return {
-        "temperature": temp,
+        "temperature": weather_data["temperature"],
         "conditions": weather_data["condition"],
         "humidity": weather_data["humidity"]
     }
@@ -245,20 +250,17 @@ def get_current_weather(location: str) -> str:
     if weather_data["alerts"]:
         alerts_text = f"\nActive alerts: {', '.join(weather_data['alerts'])}"
     
-    # Convert temperature to Fahrenheit for display
-    temp = weather_data['temperature']
-    temp_unit = '°C'
-    if isinstance(temp, (int, float)) or (isinstance(temp, str) and temp.replace(".", "", 1).isdigit()):
-        temp_c = float(temp)
-        temp_f = (temp_c * 9 / 5) + 32
-        temp = f"{temp_c}°C ({temp_f:.1f}°F)"
-        temp_unit = ''
+    # Format temperature display with both units
+    if 'temperature_c' in weather_data and weather_data['temperature_c'] != "Unknown" and weather_data['temperature_c'] != "Error":
+        temp_c = weather_data['temperature_c']
+        temp_f = weather_data['temperature']
+        temp_display = f"{temp_c}°C ({temp_f:.1f}°F)"
     else:
-        temp = f"{temp}°C"
+        temp_display = f"{weather_data['temperature']}°F"
     
     return f"""
 Current weather for {location}:
-Temperature: {temp}
+Temperature: {temp_display}
 Conditions: {weather_data['condition']}
 Humidity: {weather_data['humidity']}{alerts_text}
 """
