@@ -52,13 +52,12 @@ powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | ie
 ## Intelligence Comparison
 > My take (vibes + benchmarks) on the intelligence of the models. Don't take it as gospel.
 
-Concrete:
 ```
-claude-3-7-sonnet w/64k >= 
-    o3-mini (HIGH) >= 
-    DeepSeek R1 >=
+claude-3-7-sonnet w/64k >
+    o3-mini (HIGH) >
+    DeepSeek R1 >
+    GPT-4.5 >=
     claude-3-7-sonnet >= 
-    GPT-4.5 >
     claude-3-5-sonnet >=
     Deepseek v3
 ```
