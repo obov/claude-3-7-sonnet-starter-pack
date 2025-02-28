@@ -31,10 +31,6 @@ to access external tools and data sources. It follows a client-server architectu
 
 === QUICK START GUIDE ===
 
-OPTION 1: uv ONE-STEP INSTALLATION (RECOMMENDED)
----------------------------------------------
-Install directly into Claude Code:
-
 Add the MCP server to Claude Code
 ```bash
 claude mcp add local-weather-mcp -- uv run mcp_server_local_example.py
@@ -47,13 +43,12 @@ claude
 
 Usage in Claude Code:
     What's the weather in Germany right now?
-    What's the weather in Chicago, Minneapolis, and San Francisco?
-    Get the weather in Chicago, Minneapolis, and San Francisco and output to weather.md in a markdown table.
-    What's the weather in Tokyo right now?
-    Are there any weather alerts in Miami?
-    Tell me the current weather conditions in Paris.
+    What's the weather in Germany, Chicago, and San Francisco?
+    Get the weather in Germany, Minneapolis, Boston, Hong Kong, and San Francisco and output to weather.md in a markdown table.
+    Get the weather in the top 10 US cities and output to weather.md in a markdown table.
+    Warmest to coolest, list the temperature of the capital of US, Germany, India, UK, Canada, and China. Output to warmest_coldest_capitals.md in a markdown table.
 
-When finished:
+To remove the MCP server:
 ```bash
 claude mcp remove local-weather-mcp
 ```
