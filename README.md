@@ -54,6 +54,7 @@ powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | ie
 
 ```
 claude-3-7-sonnet w/64k >
+    o1 (HIGH) >
     o3-mini (HIGH) >
     DeepSeek R1 >
     GPT-4.5 >=

@@ -30,6 +30,9 @@ Usage:
     
     # (Answer: 40,320 ways, which is 8!)
     uv run prompt_with_extended_thinking_and_streaming.py --prompt "In how many ways can 8 rooks be placed on an 8×8 chessboard so that no two rooks attack each other?" --max_tokens 3000 --thinking_budget_tokens 2000
+    
+    # (Answer: 14 flips on average)
+    uv run prompt_with_extended_thinking_and_streaming.py --prompt "What is the expected number of coin flips needed to get 3 heads in a row?" --max_tokens 3000 --thinking_budget_tokens 2000
 """
 
 import os
