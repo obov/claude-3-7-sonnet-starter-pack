@@ -37,7 +37,7 @@ Install directly into Claude Code:
 
 Add the MCP server to Claude Code
 ```bash
-claude mcp install local-weather-mcp -- uv run mcp_server_local_example.py
+claude mcp add local-weather-mcp -- uv run mcp_server_local_example.py
 ```
 
 Then start Claude Code:
@@ -45,12 +45,13 @@ Then start Claude Code:
 claude
 ```
 
-USING THE WEATHER API IN CLAUDE
--------------------------------
-Once set up, simply ask Claude about the weather:
-- "What's the weather in Tokyo right now?"
-- "Are there any weather alerts in Miami?"
-- "Tell me the current weather conditions in Paris."
+Usage in Claude Code:
+    What's the weather in Germany right now?
+    What's the weather in Chicago, Minneapolis, and San Francisco?
+    Get the weather in Chicago, Minneapolis, and San Francisco and output to weather.md in a markdown table.
+    What's the weather in Tokyo right now?
+    Are there any weather alerts in Miami?
+    Tell me the current weather conditions in Paris.
 
 When finished:
 ```bash
