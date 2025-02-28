@@ -31,26 +31,13 @@ to access external tools and data sources. It follows a client-server architectu
 
 === QUICK START GUIDE ===
 
-OPTION 1: ONE-STEP INSTALLATION (RECOMMENDED)
+OPTION 1: uv ONE-STEP INSTALLATION (RECOMMENDED)
 ---------------------------------------------
 Install directly into Claude Code:
 
 Add the MCP server to Claude Code
 ```bash
 claude mcp install local-weather-mcp -- uv run mcp_server_local_example.py
-```
-
-Turn on the server
-```bash
-uv run mcp_server_local_example.py
-```
-
-
-
-
-```bash
-# Install dependencies and register with Claude Code in one command
-uvx mcp install mcp_server_local_example.py --name weather-api
 ```
 
 Then start Claude Code:
@@ -220,6 +207,9 @@ def get_forecast(location: str) -> Dict[str, Any]:
     Returns:
         Weather forecast data including temperature (in Fahrenheit), conditions, and humidity
     """
+    console.print(
+        f"[bold green]Received request:[/bold green] Get weather forecast for [cyan]{location}[/cyan]"
+    )
     weather_data = get_weather(location)
     return {
         "temperature": weather_data["temperature"],
@@ -238,6 +228,9 @@ def get_alerts(location: str) -> List[str]:
     Returns:
         List of active weather alerts for the location
     """
+    console.print(
+        f"[bold green]Received request:[/bold green] Get weather alerts for [cyan]{location}[/cyan]"
+    )
     weather_data = get_weather(location)
     return weather_data["alerts"]
 
@@ -252,6 +245,9 @@ def get_current_weather(location: str) -> str:
     Returns:
         Text description of current weather conditions
     """
+    console.print(
+        f"[bold green]Received request:[/bold green] Get current weather resource for [cyan]{location}[/cyan]"
+    )
     weather_data = get_weather(location)
     alerts_text = ""
     if weather_data["alerts"]:
