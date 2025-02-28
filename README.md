@@ -1,10 +1,10 @@
 # Claude 3.7 Sonnet Starter Pack 🚀
 > Look, Anthropic's Claude-3.7-Sonnet is a powerful, hybrid CRASHOUT LLM.
-> Let's breakdown it's capabilities and see how we can use it in our work and play.
+> Let's breakdown it's capabilities and see how you can use it in your work and play.
 
 *Check out [IndyDevDan YouTube Channel](https://www.youtube.com/c/indydevdan) for more AI Agents, LLMs, and AI Coding*
 
-![Claude 3.7 Sonnet Hero Image](https://docs.anthropic.com/assets/images/claude-hero-a532fd8a.webp)
+![Claude 3.7 Sonnet Hero Image](images/gpt-4-5-flop-claude-3-7-sonnet-claude-code.png)
 
 ## Overview
 
@@ -50,8 +50,18 @@ powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | ie
 | Knowledge Cut Off     | November 2024                             |
 
 ## Intelligence Comparison
+> My take (vibes + benchmarks) on the intelligence of the models. Don't take it as gospel.
 
-o3 > claude-3-7-sonnet w/64k > o3-mini (HIGH) ≥ claude-3-7-sonnet > DeepSeek R1 ≥ claude-3-5-sonnet ≥ Deepseek v3
+Concrete:
+```
+claude-3-7-sonnet w/64k >= 
+    o3-mini (HIGH) >= 
+    DeepSeek R1 >=
+    claude-3-7-sonnet >= 
+    GPT-4.5 >
+    claude-3-5-sonnet >=
+    Deepseek v3
+```
 
 ## Pricing
 
@@ -95,6 +105,7 @@ For simple tasks, you can just use the model with no extended thinking. For more
 
 For more information on Claude 3.7 Sonnet and extended thinking, check out these resources:
 
+- [Claude 3.7 Sonnet & Claude Code Release Post](https://www.anthropic.com/news/claude-3-7-sonnet)
 - [Astral UV](https://docs.astral.sh/uv/)
 - [Extended Thinking Tips for Complex STEM Problems](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/extended-thinking-tips#complex-stem-problems)
 - [Extended Thinking Documentation](https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking)
