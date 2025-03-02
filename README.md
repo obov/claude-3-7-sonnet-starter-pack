@@ -1,6 +1,8 @@
 # Claude 3.7 Sonnet Starter Pack 🚀
 > Look, Anthropic's Claude-3.7-Sonnet is a powerful, hybrid CRASHOUT LLM.
-> Their new CLAUDE CODE is THE best showcase of an effective AI AGENT TO DATE.
+> 
+> Their new CLAUDE CODE is THE best showcase of an [effective AI AGENT](https://www.anthropic.com/research/building-effective-agents) TO DATE.
+> 
 > Let's breakdown their capabilities and see how you can use it in your engineering work and play.
 
 *Check out [IndyDevDan YouTube Channel](https://youtu.be/jCVO57fZIfM) for the full breakdown of this starter pack and for more actionable insights on AI Agents, LLMs, and AI Coding.*
