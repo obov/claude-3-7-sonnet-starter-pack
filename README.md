@@ -1,8 +1,9 @@
 # Claude 3.7 Sonnet Starter Pack 🚀
 > Look, Anthropic's Claude-3.7-Sonnet is a powerful, hybrid CRASHOUT LLM.
-> Let's breakdown it's capabilities and see how you can use it in your work and play.
+> Their new CLAUDE CODE is THE best showcase of an effective AI AGENT TO DATE.
+> Let's breakdown their capabilities and see how you can use it in your engineering work and play.
 
-*Check out [IndyDevDan YouTube Channel](https://www.youtube.com/c/indydevdan) for the full breakdown of this starter pack and more AI Agents, LLMs, and AI Coding*
+*Check out [IndyDevDan YouTube Channel](https://youtu.be/jCVO57fZIfM) for the full breakdown of this starter pack and for more actionable insights on AI Agents, LLMs, and AI Coding.*
 
 ![Claude 3.7 Sonnet Hero Image](images/gpt-4-5-flop-claude-3-7-sonnet-claude-code.png)
 
@@ -110,4 +111,5 @@ For more information on Claude 3.7 Sonnet and extended thinking, check out these
 - [Extended Thinking Tips for Complex STEM Problems](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/extended-thinking-tips#complex-stem-problems)
 - [Extended Thinking Documentation](https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking)
 - [Python MCP](https://github.com/modelcontextprotocol/python-sdk?tab=readme-ov-file#installation)
+- [Model Context Protocol](https://github.com/modelcontextprotocol/servers)
 - [Claude Code Tutorials](https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/tutorials#set-up-model-context-protocol-mcp)
