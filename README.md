@@ -108,6 +108,7 @@ For simple tasks, you can just use the model with no extended thinking. For more
 
 For more information on Claude 3.7 Sonnet and extended thinking, check out these resources:
 
+- [Claude 3.7 Sonnet Starter Pack FULL BREAKDOWN](https://youtu.be/jCVO57fZIfM)
 - [Claude 3.7 Sonnet & Claude Code Release Post](https://www.anthropic.com/news/claude-3-7-sonnet)
 - [Astral UV](https://docs.astral.sh/uv/)
 - [Extended Thinking Tips for Complex STEM Problems](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/extended-thinking-tips#complex-stem-problems)
