@@ -1,5 +1,5 @@
 # Claude 3.7 Sonnet Starter Pack 🚀
-> Look, Anthropic's Claude-3.7-Sonnet is a powerful, hybrid CRASHOUT LLM.
+> Look, Anthropic's Claude-3.7-Sonnet is a powerful, hybrid reasoning, CRASHOUT LLM.
 > 
 > Their new CLAUDE CODE is THE best showcase of an [effective AI AGENT](https://www.anthropic.com/research/building-effective-agents) TO DATE.
 > 
