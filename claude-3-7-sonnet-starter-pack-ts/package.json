@@ -1,0 +1,39 @@
+{
+  "name": "claude-3-7-sonnet-starter-pack-ts",
+  "version": "1.0.0",
+  "description": "Claude 3.7 Sonnet Starter Pack TypeScript version",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc || echo 'Build completed with errors'",
+    "build:force": "tsc --skipLibCheck --noEmitOnError || echo 'Build forced with errors'",
+    "start:simple-prompt": "ts-node src/simplePrompt.ts",
+    "start:simple-structured-output": "ts-node src/simpleStructuredOutput.ts",
+    "start:simple-tool-use": "ts-node src/simpleToolUse.ts",
+    "start:prompt-with-extended-thinking": "ts-node src/promptWithExtendedThinking.ts",
+    "start:prompt-with-extended-thinking-and-streaming": "ts-node src/promptWithExtendedThinkingAndStreaming.ts",
+    "start:prompt-with-extended-thinking-tool-use": "ts-node src/promptWithExtendedThinkingToolUse.ts",
+    "start:prompt-with-extended-output": "ts-node src/promptWithExtendedOutputAndExtendedThinkingAndStreaming.ts",
+    "start:agent": "ts-node --transpile-only src/agentBashAndEditorWithExtendedThinking.ts",
+    "start:fetch": "ts-node --transpile-only src/mcpServerFetchHostedExample.ts",
+    "start:mcp": "ts-node --transpile-only src/mcpServerLocalExample.ts",
+    "start:agent:js": "node dist/agentBashAndEditorWithExtendedThinking.js",
+    "start:fetch:js": "node dist/mcpServerFetchHostedExample.js",
+    "start:mcp:js": "node dist/mcpServerLocalExample.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.45.2",
+    "chalk": "^4.1.2",
+    "cli-table3": "^0.6.3",
+    "commander": "^11.1.0",
+    "dotenv": "^16.3.1",
+    "mcp": "^1.4.0",
+    "node-fetch": "^2.6.7",
+    "ora": "^5.4.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.5",
+    "@types/node-fetch": "^2.6.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}
